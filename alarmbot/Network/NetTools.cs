@@ -84,6 +84,44 @@ namespace alarmbot.Network
             }).ConfigureAwait(false);
         }
 
+        public static List<string> DownloadFiles(List<(string, string)> url_path, string cookie = "", Action<long> download = null, Action complete = null)
+        {
+            var interrupt = new ManualResetEvent(false);
+            var result = new string[url_path.Count];
+            var count = url_path.Count;
+            int iter = 0;
+
+            foreach (var up in url_path)
+            {
+                var itertmp = iter;
+                var task = NetTask.MakeDefault(up.Item1);
+                task.SaveFile = true;
+                task.Filename = up.Item2;
+                task.DownloadCallback = (sz) =>
+                {
+                    download?.Invoke(sz);
+                };
+                task.CompleteCallback = () =>
+                {
+                    if (Interlocked.Decrement(ref count) == 0)
+                        interrupt.Set();
+                    complete?.Invoke();
+                };
+                task.ErrorCallback = (code) =>
+                {
+                    if (Interlocked.Decrement(ref count) == 0)
+                        interrupt.Set();
+                };
+                task.Cookie = cookie;
+                Program.Scheduler.Add(task);
+                iter++;
+            }
+
+            interrupt.WaitOne();
+
+            return result.ToList();
+        }
+
         public static void DownloadFile(string url, string filename)
         {
             var task = NetTask.MakeDefault(url);
