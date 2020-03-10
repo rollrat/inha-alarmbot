@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web;
 
 namespace alarmbot.Extractor
 {
@@ -33,7 +34,7 @@ namespace alarmbot.Extractor
                         return ("", "");
                     return (cc.InnerText.Trim(), document.DocumentNode.SelectSingleNode(x.Item2).InnerText.Trim());
                 }).ToList();
-            var title = document.DocumentNode.SelectSingleNode("/html[1]/body[1]/div[1]/div[2]/h2[1]").InnerText.Trim();
+            var title = HttpUtility.HtmlDecode(document.DocumentNode.SelectSingleNode("/html[1]/body[1]/div[1]/div[2]/h2[1]").InnerText.Trim());
 
             var classify = pp.Exists(x => x.Item1 == "분류") ? pp.Single(x => x.Item1 == "분류").Item2 : "";
             var datetime = pp.Exists(x => x.Item1 == "작성일") ? pp.Single(x => x.Item1 == "작성일").Item2 : "";
