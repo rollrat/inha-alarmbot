@@ -34,43 +34,6 @@ namespace alarmbot
                     download: (sz) => pb.Report(rc, download_count, sz), complete: () => Interlocked.Increment(ref download_count));
             }
         }
-        public static (string, string, string) ExtractHtml(string html)
-        {
-            var document = new HtmlDocument();
-            document.LoadHtml(html);
-            var c1 = document.DocumentNode.SelectSingleNode("/html[1]/body[1]/div[1]/div[1]/div[1]/dl[1]/dt[1]").InnerText.Trim();
-            var s1 = document.DocumentNode.SelectSingleNode("/html[1]/body[1]/div[1]/div[1]/div[1]/dl[1]/dd[1]").InnerText.Trim();
-            var c2 = document.DocumentNode.SelectSingleNode("/html[1]/body[1]/div[1]/div[1]/div[1]/dl[2]/dt[1]").InnerText.Trim();
-            var s2 = document.DocumentNode.SelectSingleNode("/html[1]/body[1]/div[1]/div[1]/div[1]/dl[2]/dd[1]").InnerText.Trim();
-            var c3 = document.DocumentNode.SelectSingleNode("/html[1]/body[1]/div[1]/div[1]/div[1]/dl[3]/dt[1]").InnerText.Trim();
-            var s3 = document.DocumentNode.SelectSingleNode("/html[1]/body[1]/div[1]/div[1]/div[1]/dl[3]/dd[1]").InnerText.Trim();
-            var c4 = document.DocumentNode.SelectSingleNode("/html[1]/body[1]/div[1]/div[1]/div[1]/dl[3]/dt[1]").InnerText.Trim();
-            var s4 = document.DocumentNode.SelectSingleNode("/html[1]/body[1]/div[1]/div[1]/div[1]/dl[3]/dd[1]").InnerText.Trim();
-            var title = document.DocumentNode.SelectSingleNode("/html[1]/body[1]/div[1]/div[2]/h2[1]").InnerText.Trim();
-
-            var classify = "";
-            var datetime = "";
-
-            if (c1 == "작성일")
-                datetime = s1;
-            else if (c2 == "작성일")
-                datetime = s2;
-            else if (c3 == "작성일")
-                datetime = s3;
-            else if (c4 == "작성일")
-                datetime = s4;
-
-            if (c1 == "분류")
-                classify = s1;
-            else if (c2 == "분류")
-                classify = s2;
-            else if (c3 == "분류")
-                classify = s3;
-            else if (c4 == "분류")
-                classify = s4;
-
-            return (classify, datetime, title);
-        }
         public static void FilteringArticle()
         {
             Directory.CreateDirectory(Path.Combine(Program.ApplicationPath, "maytrash"));
@@ -80,12 +43,12 @@ namespace alarmbot
                 try
                 {
                     var html = File.ReadAllText(file);
-                    var cc = Unit.ExtractHtml(html);
+                    var cc = InhaUnivExtractor.Parse(html);
 
-                    Console.WriteLine($"{cc.Item1}, {cc.Item2}, {cc.Item3}");
-                    w.Add(new InhaUnivDBModel { Classify = cc.Item1, DateTime = cc.Item2, Title = HttpUtility.HtmlEncode(cc.Item3), Link =
-                        $"https://www.inha.ac.kr/bbs/kr/8/{Path.GetFileNameWithoutExtension(file)}/artclView.do" });
-                    }
+                    Console.WriteLine($"{cc.Classify}, {cc.DateTime}, {cc.Title}");
+                    cc.Link = $"https://www.inha.ac.kr/bbs/kr/8/{Path.GetFileNameWithoutExtension(file)}/artclView.do";
+                    w.Add(cc);
+                }
                 catch
                 {
                     Console.WriteLine("[Fail] " + file);
