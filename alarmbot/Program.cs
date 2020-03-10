@@ -3,10 +3,16 @@
 
 using alarmbot.Network;
 using alarmbot.Postprocessor;
+using alarmbot.Setting;
 using alarmbot.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Net;
+using System.Runtime;
+using System.Runtime.CompilerServices;
+using System.Threading;
 
 namespace alarmbot
 {
@@ -24,7 +30,39 @@ namespace alarmbot
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            // GC Setting
+            GCLatencyMode oldMode = GCSettings.LatencyMode;
+            RuntimeHelpers.PrepareConstrainedRegions();
+            GCSettings.LatencyMode = GCLatencyMode.Batch;
+
+            // Extends Connteion Limit
+            ServicePointManager.DefaultConnectionLimit = int.MaxValue;
+
+            // Initialize Scheduler
+            Scheduler = new NetScheduler(Settings.Instance.Model.ThreadCount);
+
+            // Initialize Postprocessor Scheduler
+            PPScheduler = new PostprocessorScheduler(Settings.Instance.Model.PostprocessorThreadCount);
+
+            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced);
+
+            Directory.CreateDirectory(Path.Combine(ApplicationPath, "maytrash"));
+            foreach (var file in Directory.GetFiles(Path.Combine(ApplicationPath, "tmp")))
+            {
+                try
+                {
+                    var html = File.ReadAllText(file);
+                    var cc = Unit.ExtractHtml(html);
+
+                    Console.WriteLine($"{cc.Item1}, {cc.Item2}, {cc.Item3}");
+                }
+                catch {
+                    Console.WriteLine("[Fail] " + file);
+                    File.Move(file, Path.Combine(ApplicationPath, "maytrash", Path.GetFileName(file)));
+                }
+            }
+
+            ;
         }
     }
 }
