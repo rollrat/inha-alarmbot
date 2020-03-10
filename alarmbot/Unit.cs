@@ -42,8 +42,8 @@ namespace alarmbot
         }
         public static void FilteringArticle()
         {
-            Directory.CreateDirectory(Path.Combine(ApplicationPath, "maytrash"));
-            foreach (var file in Directory.GetFiles(Path.Combine(ApplicationPath, "tmp")))
+            Directory.CreateDirectory(Path.Combine(Program.ApplicationPath, "maytrash"));
+            foreach (var file in Directory.GetFiles(Path.Combine(Program.ApplicationPath, "tmp")))
             {
                 try
                 {
@@ -55,7 +55,7 @@ namespace alarmbot
                 catch
                 {
                     Console.WriteLine("[Fail] " + file);
-                    File.Move(file, Path.Combine(ApplicationPath, "maytrash", Path.GetFileName(file)));
+                    File.Move(file, Path.Combine(Program.ApplicationPath, "maytrash", Path.GetFileName(file)));
                 }
             }
 
