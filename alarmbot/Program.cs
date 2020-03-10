@@ -46,23 +46,7 @@ namespace alarmbot
 
             GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced);
 
-            Directory.CreateDirectory(Path.Combine(ApplicationPath, "maytrash"));
-            foreach (var file in Directory.GetFiles(Path.Combine(ApplicationPath, "tmp")))
-            {
-                try
-                {
-                    var html = File.ReadAllText(file);
-                    var cc = Unit.ExtractHtml(html);
 
-                    Console.WriteLine($"{cc.Item1}, {cc.Item2}, {cc.Item3}");
-                }
-                catch {
-                    Console.WriteLine("[Fail] " + file);
-                    File.Move(file, Path.Combine(ApplicationPath, "maytrash", Path.GetFileName(file)));
-                }
-            }
-
-            ;
         }
     }
 }
