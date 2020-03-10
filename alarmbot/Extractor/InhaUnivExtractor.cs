@@ -13,6 +13,7 @@ namespace alarmbot.Extractor
         public string DateTime { get; set; }
         public string Classify { get; set; }
         public string Title { get; set; }
+        public string Link { get; set; }
     }
 
     public class InhaUnivExtractor

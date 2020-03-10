@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Web;
 
 namespace alarmbot
 {
@@ -82,8 +83,9 @@ namespace alarmbot
                     var cc = Unit.ExtractHtml(html);
 
                     Console.WriteLine($"{cc.Item1}, {cc.Item2}, {cc.Item3}");
-                    w.Add(new InhaUnivDBModel { Classify = cc.Item1, DateTime = cc.Item2, Title = cc.Item3 });
-                }
+                    w.Add(new InhaUnivDBModel { Classify = cc.Item1, DateTime = cc.Item2, Title = HttpUtility.HtmlEncode(cc.Item3), Link =
+                        $"https://www.inha.ac.kr/bbs/kr/8/{Path.GetFileNameWithoutExtension(file)}/artclView.do" });
+                    }
                 catch
                 {
                     Console.WriteLine("[Fail] " + file);
