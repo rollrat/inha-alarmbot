@@ -24,7 +24,6 @@ namespace alarmbot.DataBase
         {
             this.dbpath = dbpath;
 
-
             var db = new SQLiteConnection(dbpath);
             var info = db.GetTableInfo(typeof(T).Name);
             if (!info.Any())
@@ -37,8 +36,6 @@ namespace alarmbot.DataBase
             lock (dblock)
             {
                 var db = new SQLiteConnection(dbpath);
-                //var count = db.ExecuteScalar<int>("select count(*) from " + typeof(T).Name);
-                //dbm.Id = count;
                 db.Insert(dbm);
                 db.Close();
             }
@@ -60,6 +57,24 @@ namespace alarmbot.DataBase
             {
                 using (var db = new SQLiteConnection(dbpath))
                     return db.Table<T>().ToList();
+            }
+        }
+
+        public List<T> Query(string where)
+        {
+            lock (dblock)
+            {
+                var db = new SQLiteConnection(dbpath);
+                return db.Query<T>($"select * from {typeof(T).Name} where {where}");
+            }
+        }
+
+        public List<T> Query(Func<T, bool> func)
+        {
+            lock (dblock)
+            {
+                var db = new SQLiteConnection(dbpath);
+                return db.Table<T>().Where(func).ToList();
             }
         }
     }

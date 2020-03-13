@@ -17,6 +17,13 @@ namespace alarmbot.Extractor
         public string Classify { get; set; }
         public string Title { get; set; }
         public string Link { get; set; }
+
+        public override string ToString()
+        {
+            if (Classify != "")
+                return $"[{Classify}] {Title} - {DateTime}\r\n{Link}";
+            return $"{Title} - {DateTime}\r\n{Link}";
+        }
     }
 
     public class InhaUnivExtractor

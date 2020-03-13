@@ -37,8 +37,10 @@ namespace alarmbot
         public static void FilteringArticle()
         {
             Directory.CreateDirectory(Path.Combine(Program.ApplicationPath, "maytrash"));
-            var w = new SQLiteWrapper<InhaUnivDBModel>("database.db");
-            foreach (var file in Directory.GetFiles(Path.Combine(Program.ApplicationPath, "tmp")))
+            var w = ExtractManager.InhaUnivDB;
+            var files = Directory.GetFiles(Path.Combine(Program.ApplicationPath, "tmp")).ToList();
+            files.Sort((x, y) => Convert.ToInt32(Path.GetFileNameWithoutExtension(x)).CompareTo(Convert.ToInt32(Path.GetFileNameWithoutExtension(y))));
+            foreach (var file in files)
             {
                 try
                 {

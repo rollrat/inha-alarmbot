@@ -1,6 +1,7 @@
 ﻿// This source code is a part of Inha Univ AlarmBot.
 // Copyright (C) 2020. rollrat. Licensed under the MIT Licence.
 
+using alarmbot.ChatBot;
 using alarmbot.Utils;
 using Newtonsoft.Json;
 using System;
@@ -22,6 +23,8 @@ namespace alarmbot.Setting
         }
 
         public NetworkSetting NetworkSettings;
+
+        public BotSettings BotSettings;
 
         /// <summary>
         /// Scheduler Thread Count
@@ -74,6 +77,16 @@ namespace alarmbot.Setting
                         UsingProxyList = false,
                         UsingFreeProxy = false,
                     },
+
+                    BotSettings = new BotSettings()
+                    {
+                        EnableTelegramBot = false,
+                        TelegramBotAccessToken = "",
+                        EnableKakaoBot = false,
+                        KakaoSkillServerPort = "",
+                        AccessIdentifierMessage = ""
+                    },
+
                 };
             }
             Save();
@@ -135,6 +148,17 @@ namespace alarmbot.Setting
             if (Model.NetworkSettings.RetryCount < 0)
                 Model.NetworkSettings.RetryCount = 10;
 
+            if (Model.BotSettings == null)
+            {
+                Model.BotSettings = new BotSettings()
+                {
+                    EnableTelegramBot = false,
+                    TelegramBotAccessToken = "",
+                    EnableKakaoBot = false,
+                    KakaoSkillServerPort = "",
+                    AccessIdentifierMessage = ""
+                };
+            }
         }
 
         public void Save()
