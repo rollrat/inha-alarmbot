@@ -35,13 +35,6 @@ namespace alarmbot
 
         static void Main(string[] args)
         {
-            ChatBot.KakaoBotSkillServer.StartServer();
-
-            while (true)
-            {
-                Thread.Sleep(100);
-            }
-
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
             GCLatencyMode oldMode = GCSettings.LatencyMode;
