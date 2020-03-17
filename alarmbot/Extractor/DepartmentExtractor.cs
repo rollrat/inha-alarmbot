@@ -118,7 +118,7 @@ namespace alarmbot.Extractor
                 if (pattern.Number == "" || !int.TryParse(pattern.Number, out _))
                     continue;
                 pattern.Title = HttpUtility.HtmlDecode(node.SelectSingleNode("./td[2]").InnerText).Trim();
-                pattern.Link = "https://dept.inha.ac.kr" + HttpUtility.HtmlDecode(node.SelectSingleNode("./td[2]/a[1]").GetAttributeValue("href", "").Trim());
+                pattern.Link = "http://inhasmse.cafe24.com/" + HttpUtility.HtmlDecode(node.SelectSingleNode("./td[2]/a[1]").GetAttributeValue("href", "").Trim());
                 pattern.Author = node.SelectSingleNode("./td[3]").InnerText.Trim();
                 pattern.DateTime = node.SelectSingleNode("./td[4]").InnerText.Trim();
                 pattern.Views = node.SelectSingleNode("./td[5]").InnerText.Trim();
@@ -141,7 +141,7 @@ namespace alarmbot.Extractor
                 if (pattern.Number == "" || !int.TryParse(pattern.Number, out _))
                     continue;
                 pattern.Title = HttpUtility.HtmlDecode(node.SelectSingleNode("./td[3]").InnerText).Trim();
-                pattern.Link = "https://dept.inha.ac.kr" + HttpUtility.HtmlDecode(node.SelectSingleNode("./td[3]/a[1]").GetAttributeValue("href", "").Trim());
+                pattern.Link = "http://www.wdn.co.kr/" + HttpUtility.HtmlDecode(node.SelectSingleNode("./td[3]/a[1]").GetAttributeValue("href", "").Trim());
                 pattern.Author = node.SelectSingleNode("./td[4]").InnerText.Trim();
                 pattern.DateTime = node.SelectSingleNode("./td[5]").InnerText.Trim();
                 pattern.Views = node.SelectSingleNode("./td[6]").InnerText.Trim();
