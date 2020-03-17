@@ -32,12 +32,6 @@ namespace alarmbot.Network
             NetTaskPass.RunOnField(ref content);
 
             interrupt.WaitOne();
-            if (content.DownloadString)
-                Log.Logs.Instance.Push("[NetField] Start download string... " + content.Url);
-            else if (content.MemoryCache)
-                Log.Logs.Instance.Push("[NetField] Start download to memory... " + content.Url);
-            else if (content.SaveFile)
-                Log.Logs.Instance.Push("[NetField] Start download file... " + content.Url + " to " + content.Filename);
 
         REDIRECTION:
 
