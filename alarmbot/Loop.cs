@@ -4,6 +4,7 @@
 using alarmbot.ChatBot;
 using alarmbot.Extractor;
 using alarmbot.Network;
+using alarmbot.Res;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,20 +42,35 @@ namespace alarmbot
                 }
             }
 
-            // CSE Department
+            // Department Notices
             {
-                var url = "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=6594&siteId=cse";
-                var html = NetTools.DownloadString(url);
-
-                try
+                // Lazy downloading
+                foreach (var department in DepartmentList.Lists)
                 {
-                    while (true)
+                    try
                     {
-                        var cc = DepartmentExtractor.ExtractStyle1(html, "CSE");
+                        if (department.Item3 == "") continue;
+                        var task = NetTask.MakeDefault(department.Item3);
+                        if (department.Item2 == "s5")
+                            task.Encoding = Encoding.GetEncoding(51949);
+                        var html = NetTools.DownloadString(task);
+
+                        List<DepartmentDBModel> cc = null;
+
+                        if (department.Item2 == "s1")
+                            cc = DepartmentExtractor.ExtractStyle1(html, department.Item1);
+                        else if (department.Item2 == "s2")
+                            cc = DepartmentExtractor.ExtractStyle2(html, department.Item1);
+                        else if (department.Item2 == "s3")
+                            cc = DepartmentExtractor.ExtractStyle3(html, department.Item1);
+                        else if (department.Item2 == "s4")
+                            cc = DepartmentExtractor.ExtractStyle4(html, department.Item1);
+                        else if (department.Item2 == "s5")
+                            cc = DepartmentExtractor.ExtractStyle5(html, department.Item1);
 
                         // get cse latest
                         var mm = new HashSet<int>();
-                        ExtractManager.DepartmentArticles.Where(x => x.Department == "CSE").ToList().ForEach(x => mm.Add(Convert.ToInt32(x.Number)));
+                        ExtractManager.DepartmentArticles.Where(x => x.Department == department.Item1).ToList().ForEach(x => mm.Add(Convert.ToInt32(x.Number)));
 
                         int starts = 0;
                         for (starts = cc.Count - 1; starts >= 0; starts--)
@@ -68,14 +84,18 @@ namespace alarmbot
                             ExtractManager.DepartmentArticles.Add(cc[i]);
                             ExtractManager.DepartmentDB.Add(cc[i]);
 
-                            await BotManager.Instance.Notice(cc[i].ToString(), "MSG-CSE");
+                            //await BotManager.Instance.Notice(cc[i].ToString(), "MSG-" + department.Item1);
                         }
 
-                        break;
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Logs.Instance.PushError("[Loop] '" + department.Item1 + "' " + e.Message + "\r\n" + e.StackTrace);
                     }
                 }
-                catch { }
             }
+
+            Log.Logs.Instance.Push("[Loop] Cycle " + Count.ToString());
 
             Count++;
         }

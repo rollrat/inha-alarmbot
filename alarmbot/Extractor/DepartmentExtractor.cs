@@ -2,6 +2,7 @@
 // Copyright (C) 2020. rollrat. Licensed under the MIT Licence.
 
 using alarmbot.DataBase;
+using alarmbot.Res;
 using alarmbot.Utils;
 using HtmlAgilityPack;
 using System;
@@ -23,12 +24,7 @@ namespace alarmbot.Extractor
 
         public override string ToString()
         {
-            var prefix = "";
-            if (Department == "CSE")
-                prefix = "컴퓨터공학과";
-            else if (Department == "MECH")
-                prefix = "기계공학과";
-            return $"[{prefix}] {Title} - {DateTime}\r\n{Link}";
+            return $"[{DepartmentList.InverseReference[Department]}] {Title} - {DateTime}\r\n{Link}";
         }
     }
 

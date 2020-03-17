@@ -10,6 +10,7 @@ namespace alarmbot.Res
     public class DepartmentList
     {
         public static (string, string, string, string, string[])[] Lists;
+        public static Dictionary<string, string> InverseReference;
         static DepartmentList()
         {
             // (shorts, parsing style, board address, department, other names)
@@ -61,10 +62,10 @@ namespace alarmbot.Res
                 ("ie", "s2", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=1089&siteId=ie", "공과대학", new[] { "산업경영공학과", "산업경영", "산경", "산업"}),
                 ("chemeng", "s2", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=5950&siteId=chemeng", "공과대학", new[] { "화학공학과", "화공"}),
                 ("bio","s2", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=2185&siteId=bio", "공과대학", new[] { "생명공학과", "생공"}),
-                ("inhapoly", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=5111&siteId=inhapoly", "s2", "공과대학", new[] { "고분자공학과", "고분자"}),
+                ("inhapoly", "s2", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=5111&siteId=inhapoly", "공과대학", new[] { "고분자공학과", "고분자"}),
                 ("dmse", "s4", "http://inhasmse.cafe24.com/bbs/board.php?bo_table=notice&page=1", "공과대학", new[] { "신소재공학과", "신소재"}),
                 ("civil", "s2", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=5842&siteId=civil", "공과대학", new[] { "사회인프라공학과", "사회인프라", "사인프"}),
-                ("environment", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=1229&siteId=iuee", "s2", "공과대학", new[] { "환경공학과", "환경"}),
+                ("environment", "s2", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=1229&siteId=iuee", "공과대학", new[] { "환경공학과", "환경"}),
                 ("geoinfo", "s2", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=1517&siteId=geoinfo", "공과대학", new[] { "공간정보공학과", "공간정보", "공간"}),
                 ("arch", "s2", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=6357&siteId=arch", "공과대학", new[] { "건축학과", "건축"}),
                 ("arch", "", "", "공과대학", new[] { "건축공학과", "건공"}),
@@ -94,6 +95,11 @@ namespace alarmbot.Res
                 ("fccollege", "", "", "미래융합대학", new[] { "산업경영학과", "산업", "산경"}),
                 ("fccollege", "", "", "미래융합대학", new[] { "금융세무재테크학과", "금융"}),
             };
+
+            InverseReference = new Dictionary<string, string>();
+            foreach (var department in Lists)
+                if (!InverseReference.ContainsKey(department.Item1))
+                    InverseReference.Add(department.Item1, department.Item5[0]);
         }
     }
 }
