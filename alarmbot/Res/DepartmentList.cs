@@ -9,7 +9,7 @@ namespace alarmbot.Res
 {
     public class DepartmentList
     {
-        static (string, string, string, string, string[])[] Lists;
+        public static (string, string, string, string, string[])[] Lists;
         static DepartmentList()
         {
             // (shorts, parsing style, board address, department, other names)
