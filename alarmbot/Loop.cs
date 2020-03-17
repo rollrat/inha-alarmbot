@@ -50,7 +50,7 @@ namespace alarmbot
                 {
                     while (true)
                     {
-                        var cc = DepartmentExtractor.ExtractCSE(html);
+                        var cc = DepartmentExtractor.ExtractStyle1(html, "CSE");
 
                         // get cse latest
                         var mm = new HashSet<int>();
