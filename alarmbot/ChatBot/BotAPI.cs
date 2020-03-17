@@ -21,6 +21,8 @@ namespace alarmbot.ChatBot
             {
                 try
                 {
+                    BotManager.Instance.Messages.Add(new ChatMessage { ChatBotName = typeof(T).Name, Identification = user.ToString(), RawMessage = msg });
+
                     var command = msg.Split(' ')[0];
 
                     Log.Logs.Instance.Push("[Bot] Received Message - " + msg + "\r\n" + Log.Logs.SerializeObject(user));

@@ -20,12 +20,21 @@ namespace alarmbot.ChatBot
         public string Option { get; set; }
     }
 
+    public class ChatMessage : SQLiteColumnModel
+    {
+        public string ChatBotName { get; set; }
+        public string Identification { get; set; }
+        public string RawMessage { get; set; }
+    }
+
     public class BotManager : ILazy<BotManager>
     {
         Dictionary<string, BotModel> bots = new Dictionary<string, BotModel>();
 
         public SQLiteWrapper<UserDBModel> UserDB { get; set; }
         public List<UserDBModel> Users { get; set; }
+
+        public SQLiteWrapper<ChatMessage> Messages { get; set; }
 
         public void StartBots()
         {
