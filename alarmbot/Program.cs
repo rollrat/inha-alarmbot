@@ -48,6 +48,16 @@ namespace alarmbot
 
             GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced);
 
+#if DEBUG
+            ChatBot.BotManager.Instance.StartBots();
+
+            while (true)
+            {
+                System.Threading.Tasks.Task.Run(async () => await Loop.LoopInternal());
+                Thread.Sleep(1000 * 60 * 10);
+            }
+#endif
+
             try
             {
                 Command.Start(args);

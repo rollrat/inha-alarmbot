@@ -84,6 +84,8 @@ namespace alarmbot.Setting
                         TelegramBotAccessToken = "",
                         EnableKakaoBot = false,
                         KakaoSkillServerPort = "",
+                        EnableDiscordBot = false,
+                        DiscordClientId = "",
                         AccessIdentifierMessage = ""
                     },
 
@@ -156,6 +158,8 @@ namespace alarmbot.Setting
                     TelegramBotAccessToken = "",
                     EnableKakaoBot = false,
                     KakaoSkillServerPort = "",
+                    EnableDiscordBot = false,
+                    DiscordClientId = "",
                     AccessIdentifierMessage = ""
                 };
             }

@@ -36,6 +36,8 @@ namespace alarmbot
                         ExtractManager.InhaUnivArticles.Add(cc);
                         ExtractManager.InhaUnivDB.Add(cc);
 
+                        Log.Logs.Instance.Push($"[Loop] New item is added. -  IUA  - {cc.Title}");
+
                         await BotManager.Instance.Notice(cc.ToString(), "MSG-MAIN");
                     }
                     catch { }
@@ -84,7 +86,8 @@ namespace alarmbot
                             ExtractManager.DepartmentArticles.Add(cc[i]);
                             ExtractManager.DepartmentDB.Add(cc[i]);
 
-                            //await BotManager.Instance.Notice(cc[i].ToString(), "MSG-" + department.Item1);
+                            Log.Logs.Instance.Push($"[Loop] New item is added. -  DN  - {cc[i].Title}");
+                            await BotManager.Instance.Notice(cc[i].ToString(), "MSG-" + department.Item1);
                         }
 
                     }

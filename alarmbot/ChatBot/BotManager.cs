@@ -39,20 +39,28 @@ namespace alarmbot.ChatBot
         public void StartBots()
         {
             UserDB = new SQLiteWrapper<UserDBModel>("users.db");
+            Messages = new SQLiteWrapper<ChatMessage>("messages.db");
             Users = UserDB.QueryAll();
 
             if (Settings.Instance.Model.BotSettings.EnableTelegramBot)
                 bots.Add("TelegramBot", new TelegramBot());
 
-
+            if (Settings.Instance.Model.BotSettings.EnableDiscordBot)
+                bots.Add("DiscordBot", new DiscordBot());
 
             bots.ToList().ForEach(x => x.Value.Start());
         }
 
         public async Task Notice(string contents, string type)
         {
+            var token = type.Split('-');
             if (type.StartsWith("MSG-"))
-                await Task.WhenAll(Users.Select(user => bots[user.ChatBotName].SendMessage(user, contents)));
+            {
+                if (token[1] != "MAIN")
+                    await Task.WhenAll(Users.Where(x => x.Filtering != null && x.Filtering.Split(',').Contains(token[1])).Select(user => bots[user.ChatBotName].SendMessage(user, contents)));
+                else
+                    await Task.WhenAll(Users.Select(user => bots[user.ChatBotName].SendMessage(user, contents)));
+            }
             else if (type.StartsWith("ADMIN-"))
                 await Task.WhenAll(Users.Where(x => x.Option != null && x.Option.Contains("ADMIN")).Select(user => bots[user.ChatBotName].SendMessage(user, contents)));
         }

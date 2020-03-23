@@ -15,6 +15,9 @@ namespace alarmbot.ChatBot
         public bool EnableKakaoBot;
         public string KakaoSkillServerPort;
 
+        public bool EnableDiscordBot;
+        public string DiscordClientId;
+
         public string AccessIdentifierMessage;
     }
 }

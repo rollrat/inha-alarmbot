@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace alarmbot.Res
@@ -10,7 +11,11 @@ namespace alarmbot.Res
     public class DepartmentList
     {
         public static (string, string, string, string, string[])[] Lists;
+        public static Dictionary<string, string> ClassReference;
         public static Dictionary<string, string> InverseReference;
+        public static Dictionary<string, string> OtherReference;
+        public static List<KeyValuePair<string, List<(string, string)>>> ClassDepartmentReference; 
+        public static List<(string, string)> KorEngReference;
         static DepartmentList()
         {
             // (shorts, parsing style, board address, department, other names)
@@ -22,9 +27,9 @@ namespace alarmbot.Res
                 ("star", "s1", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=673&siteId=star", "경영대학", new[] {"국제통상학과", "국통"}),
 
                 // 사범대학
-                ("koreanedu", "s2", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=6105&siteId=koreanedu", "사범대학", new[] { "국어교육과", "국어교육", "국어"}),
-                ("dele", "s2", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=6167&siteId=dele", "사범대학", new[] { "영어교육과", "영어교육", "영어"}),
-                ("socialedu", "s2", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=3697&siteId=social", "사범대학", new[] { "사회교육과", "사회교육", "사회"}),
+                ("koreanedu", "s2", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=6105&siteId=koreanedu", "사범대학", new[] { "국어교육과", "국어교육", "국어", "국교" }),
+                ("dele", "s2", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=6167&siteId=dele", "사범대학", new[] { "영어교육과", "영어교육", "영교" }),
+                ("socialedu", "s2", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=3697&siteId=social", "사범대학", new[] { "사회교육과", "사회교육", "사회", "사교" }),
                 ("education", "s2", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=6271&siteId=education", "사범대학", new[] { "교육학과", "교육" }),
                 ("physicaledu", "s2", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=2924&siteId=physicaledu", "사범대학", new[] { "체육교육과", "체육", "체교" }),
                 ("mathed", "s2", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=6136&siteId=mathed", "사범대학", new[] { "수학교육과", "수교" }),
@@ -59,7 +64,7 @@ namespace alarmbot.Res
                 ("mech", "s3", "https://mech.inha.ac.kr/board_notice/list.aspx", "공과대학", new[] { "기계공학과", "기계"}),
                 ("aerospace", "s1", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=7043&siteId=aerospace", "공과대학", new[] { "항공우주공학과", "항공우주", "항우공", "항공"}),
                 ("naoe", "s1", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=1477&siteId=naoe", "공과대학", new[] { "조선해양공학과", "조선해양", "조선"}),
-                ("ie", "s2", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=1089&siteId=ie", "공과대학", new[] { "산업경영공학과", "산업경영", "산경", "산업"}),
+                ("ie", "s2", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=1089&siteId=ie", "공과대학", new[] { "산업경영공학과", "산업경영공학", "산공" }),
                 ("chemeng", "s2", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=5950&siteId=chemeng", "공과대학", new[] { "화학공학과", "화공"}),
                 ("bio","s2", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=2185&siteId=bio", "공과대학", new[] { "생명공학과", "생공"}),
                 ("inhapoly", "s2", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=5111&siteId=inhapoly", "공과대학", new[] { "고분자공학과", "고분자"}),
@@ -82,12 +87,12 @@ namespace alarmbot.Res
                 ("physics", "s2", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=3555&siteId=physics", "자연과학대학", new[] { "물리학과", "물리"}),
                 ("chemistry", "s2", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=2964&siteId=chemistry", "자연과학대학", new[] { "화학과", "화학"}),
                 ("biology", "s1", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=658&siteId=biology", "자연과학대학", new[] { "생명과학과", "생명"}),
-                ("ocean", "s5", "http://www.wdn.co.kr/html/info02.php", "자연과학대학", new[] { "해양과학과", "해양"}),
+                //("ocean", "s5", "http://www.wdn.co.kr/html/info02.php", "자연과학대학", new[] { "해양과학과", "해양"}),
                 ("foodnutri", "s1", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=5374&siteId=foodnutri", "자연과학대학", new[] { "식품영양학과", "식품영양", "식품"}),
 
                 // 의과대학
-                ("medicine", "s1", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=5682&siteId=medicine", "의과대학", new[] { "의예과", "의예", "의학"}),
-                ("nursing", "s1", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=3845&siteId=nursing", "의과대학", new[] { "간호학과", "간호"}),
+                ("medicine", "s1", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=5682&siteId=medicine", "의과대학", new[] { "의예과", "의예", "의학", "의대" }),
+                ("nursing", "s1", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=3845&siteId=nursing", "의과대학", new[] { "간호학과", "간호" }),
 
                 // 미래융합대학
                 ("fccollege", "s2", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=765&siteId=cfc", "미래융합대학", new[] { "메카트로닉스학과", "메카트로닉스"}),
@@ -96,10 +101,63 @@ namespace alarmbot.Res
                 ("fccollege", "", "", "미래융합대학", new[] { "금융세무재테크학과", "금융"}),
             };
 
+            ClassReference = new Dictionary<string, string>();
             InverseReference = new Dictionary<string, string>();
+            OtherReference = new Dictionary<string, string>();
+            KorEngReference = new List<(string, string)>();
+            var cdr = new Dictionary<string, List<(string, string)>>();
+
             foreach (var department in Lists)
+            {
                 if (!InverseReference.ContainsKey(department.Item1))
+                {
                     InverseReference.Add(department.Item1, department.Item5[0]);
+                    ClassReference.Add(department.Item1, department.Item4);
+                }
+                else
+                {
+                    InverseReference[department.Item1] += "," + department.Item5[0];
+                }
+                if (!cdr.ContainsKey(department.Item4))
+                {
+                    cdr.Add(department.Item4, new List<(string, string)>());
+                }
+                cdr[department.Item4].Add((department.Item1, department.Item5[0]));
+                foreach (var dept_other in department.Item5)
+                {
+                    OtherReference.Add(dept_other, department.Item1);
+                    KorEngReference.Add((department.Item1, string.Join("", dept_other.Select(x => hangul_disassembly(x)))));
+                }
+            }
+
+            ClassDepartmentReference = cdr.ToList();
+        }
+
+        static readonly string[] cc = new[] { "r", "R", "rt", "s", "sw", "sg", "e", "E", "f", "fr", "fa", "fq", "ft", "fe",
+            "fv", "fg", "a", "q", "Q", "qt", "t", "T", "d", "w", "W", "c", "z", "e", "v", "g", "k", "o", "i", "O",
+            "j", "p", "u", "P", "h", "hk", "ho", "hl", "y", "n", "nj", "np", "nl", "b", "m", "ml", "l", " ", "ss",
+            "se", "st", " ", "frt", "fe", "fqt", " ", "fg", "aq", "at", " ", " ", "qr", "qe", "qtr", "qte", "qw",
+            "qe", " ", " ", "tr", "ts", "te", "tq", "tw", " ", "dd", "d", "dt", " ", " ", "gg", " ", "yi", "yO", "yl", "bu", "bP", "bl" };
+        static readonly char[] cc1 = new[] { 'r', 'R', 's', 'e', 'E', 'f', 'a', 'q', 'Q', 't', 'T', 'd', 'w', 'W', 'c', 'z', 'x', 'v', 'g' };
+        static readonly string[] cc2 = new[] { "k", "o", "i", "O", "j", "p", "u", "P", "h", "hk", "ho", "hl", "y", "n", "nj", "np", "nl", "b", "m", "ml", "l" };
+        static readonly string[] cc3 = new[] { "", "r", "R", "rt", "s", "sw", "sg", "e", "f", "fr", "fa", "fq", "ft", "fx", "fv", "fg", "a", "q", "qt", "t", "T", "d", "w", "c", "z", "x", "v", "g" };
+
+        public static string hangul_disassembly(char letter)
+        {
+            if (0xAC00 <= letter && letter <= 0xD7FB)
+            {
+                int unis = letter - 0xAC00;
+                return cc1[unis / (21 * 28)] + cc2[(unis % (21 * 28)) / 28] + cc3[(unis % (21 * 28)) % 28];
+            }
+            else if (0x3131 <= letter && letter <= 0x3163)
+            {
+                int unis = letter;
+                return cc[unis - 0x3131];
+            }
+            else
+            {
+                return letter.ToString();
+            }
         }
     }
 }
