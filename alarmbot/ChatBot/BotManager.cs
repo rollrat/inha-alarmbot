@@ -56,13 +56,14 @@ namespace alarmbot.ChatBot
             var token = type.Split('-');
             if (type.StartsWith("MSG-"))
             {
-                if (token[1] != "MAIN")
-                    await Task.WhenAll(Users.Where(x => x.Filtering != null && x.Filtering.Split(',').Contains(token[1])).Select(user => bots[user.ChatBotName].SendMessage(user, contents)));
-                else
+                if (token[1] == "MAIN" || token[1] == "NOTICE")
                     await Task.WhenAll(Users.Select(user => bots[user.ChatBotName].SendMessage(user, contents)));
+                else
+                    await Task.WhenAll(Users.Where(x => x.Filtering != null && x.Filtering.Split(',').Contains(token[1])).Select(user => bots[user.ChatBotName].SendMessage(user, contents)));
+                
             }
             else if (type.StartsWith("ADMIN-"))
-                await Task.WhenAll(Users.Where(x => x.Option != null && x.Option.Contains("ADMIN")).Select(user => bots[user.ChatBotName].SendMessage(user, contents)));
+                await Task.WhenAll(Users.Where(x => x.Option != null && x.Filtering.Contains("ADMIN")).Select(user => bots[user.ChatBotName].SendMessage(user, contents)));
         }
 
         public async Task<bool> Send(string contents, string type, string id)

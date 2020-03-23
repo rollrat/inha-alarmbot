@@ -150,7 +150,7 @@ namespace alarmbot.ChatBot
                                 if (!string.IsNullOrEmpty(Settings.Instance.Model.BotSettings.AccessIdentifierMessage) 
                                     && aim == Settings.Instance.Model.BotSettings.AccessIdentifierMessage)
                                 {
-                                    userdb.Filtering += "ADMIN,";
+                                    userdb.Filtering += ",ADMIN";
                                     BotManager.Instance.UserDB.Update(userdb);
                                     await bot.SendMessage(user, $"새로운 신원 '{user.ToString()}'에 관리자 권한을 추가했습니다.");
                                 }
@@ -177,7 +177,7 @@ namespace alarmbot.ChatBot
                         case "/msg":
 
                             {
-                                if (filter.Contains("ADMIN"))
+                                if (!filter.Contains("ADMIN"))
                                 {
                                     await bot.SendMessage(user, "이 명령을 이용할 권한이 없습니다.");
                                     return;
@@ -199,7 +199,7 @@ namespace alarmbot.ChatBot
                         case "/notice":
 
                             {
-                                if (filter.Contains("ADMIN"))
+                                if (!filter.Contains("ADMIN"))
                                 {
                                     await bot.SendMessage(user, "이 명령을 이용할 권한이 없습니다.");
                                     return;
