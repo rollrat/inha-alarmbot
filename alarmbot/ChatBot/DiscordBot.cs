@@ -36,9 +36,11 @@ namespace alarmbot.ChatBot
     public class DiscordBot : BotModel
     {
         DiscordSocketClient client;
+        ulong guild_id;
 
         public override Task SendMessage(BotUserIdentifier user, string message)
         {
+            //var guild = client.GetGuild(guild_id);
             var embed = new EmbedBuilder();
             embed.Title = "인하대 알림봇";
             embed.WithColor(Color.Blue);
@@ -61,18 +63,39 @@ namespace alarmbot.ChatBot
 
         public override void Start()
         {
-            client = new DiscordSocketClient();
+            client = new DiscordSocketClient(new DiscordSocketConfig { AlwaysDownloadUsers = true,  });
 
             client.MessageReceived += Client_MessageReceived;
             client.GuildAvailable += Client_GuildAvailable;
+            client.Ready += Client_Ready;
 
             client.LoginAsync(TokenType.Bot, Settings.Instance.Model.BotSettings.DiscordClientId).Wait();
             client.StartAsync().Wait();
         }
 
+        private async Task Client_Ready()
+        {
+            Log.Logs.Instance.Push("[Discord Bot] Guild data is ready!");
+
+
+            ulong x = 691573311129518111;
+            var us = client.GetUser("rollrat","1302");
+            var channel = client.GetChannel(x);
+
+            await us.SendMessageAsync("fgh");
+        }
+
         private async Task Client_GuildAvailable(SocketGuild arg)
         {
-            ;
+            //guild_id = arg.Id;
+            //ulong x = 691573311129518111;
+            ////
+            //var guild = client.GetGuild(guild_id);
+            //await guild.DownloadUsersAsync();
+            ////(guild.GetChannel(x) as IMessageChannel).SendMessageAsync("asdf").Wait();
+            //
+            //var channel = guild.GetChannel(x);
+            //var cc = client.GetChannel(x);
         }
 
         private async Task Client_MessageReceived(SocketMessage arg)
