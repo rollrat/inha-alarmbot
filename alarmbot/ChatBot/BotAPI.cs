@@ -226,7 +226,7 @@ namespace alarmbot.ChatBot
                                 builder.Append($"실행시간: {Program.StartTime.ToLongTimeString()}\r\n");
                                 builder.Append($"루프횟수: {Loop.Count}회 (10분마다 업데이트됨)\r\n");
                                 //builder.Append($"채널관리자: rollrat.cse@gmail.com\r\n");
-                                //builder.Append($"소드코드: https://github.com/rollrat/inha-alarmbot\r\n");
+                                builder.Append($"소드코드: https://github.com/rollrat/inha-alarmbot\r\n");
                                 builder.Append("\r\n");
                                 builder.Append("디스코드 알림봇: http://inhaalarmbot.kro.kr\r\n");
                                 builder.Append("텔레그램 알림봇: https://t.me/inhanoticebot\r\n");
