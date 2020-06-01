@@ -61,9 +61,9 @@ namespace alarmbot.Res
                 ("artsports", "", "", "예술체육학부", new[] { "의류디자인학과", "의류디자인", "의류", "의디" }),
 
                 // 공과대학
-                ("mech", "s3", "https://mech.inha.ac.kr/board_notice/list.aspx", "공과대학", new[] { "기계공학과", "기계"}),
+                ("mech", "s6", "https://mech.inha.ac.kr/mech/1134/subview.do", "공과대학", new[] { "기계공학과", "기계"}),
                 ("aerospace", "s1", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=7043&siteId=aerospace", "공과대학", new[] { "항공우주공학과", "항공우주", "항우공", "항공"}),
-                ("naoe", "s1", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=1477&siteId=naoe", "공과대학", new[] { "조선해양공학과", "조선해양", "조선"}),
+                ("naoe", "s6", "https://naoe.inha.ac.kr/naoe/1431/subview.do", "공과대학", new[] { "조선해양공학과", "조선해양", "조선"}),
                 ("ie", "s2", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=1089&siteId=ie", "공과대학", new[] { "산업경영공학과", "산업경영공학", "산공" }),
                 ("chemeng", "s2", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=5950&siteId=chemeng", "공과대학", new[] { "화학공학과", "화공"}),
                 ("bio","s2", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=2185&siteId=bio", "공과대학", new[] { "생명공학과", "생공"}),
@@ -76,7 +76,7 @@ namespace alarmbot.Res
                 ("arch", "", "", "공과대학", new[] { "건축공학과", "건공"}),
                 ("eneres", "s2", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=4991&siteId=eneres", "공과대학", new[] {"에너지자원공학과", "에너지자원", "에너지"}),
                 ("ee", "s2", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=1125&siteId=einha", "공과대학", new[] { "전자공학과", "전자"}),
-                ("cse", "s1", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=6594&siteId=cse", "공과대학", new[] { "컴퓨터공학과", "컴공"}),
+                ("cse", "s6", "https://cse.inha.ac.kr/cse/888/subview.do", "공과대학", new[] { "컴퓨터공학과", "컴공"}),
                 ("electrical", "s2", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=1009&siteId=electrical", "공과대학", new[] { "전기공학과", "전기"}),
                 ("ice", "s2", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=6712&siteId=ice", "공과대학", new[] { "정보통신공학과", "정보통신", "정통"}),
                 ("", "", "", "공과대학", new[] { "융합기술경영학부", "융합기술경영"}),

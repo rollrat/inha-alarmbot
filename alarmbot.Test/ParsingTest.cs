@@ -61,6 +61,14 @@ namespace alarmbot.Test
             Assert.IsTrue(c1.Count > 0, $"{c1.Count}");
         }
 
+        public void Test6(string url)
+        {
+            var html = NetTools.DownloadString(url);
+            var c1 = DepartmentExtractor.ExtractStyle6(html, "");
+
+            Assert.IsTrue(c1.Count > 0, $"{c1.Count}");
+        }
+
         [TestMethod] public void bizParsingTest() => Test1("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=7105&siteId=bisin");
         [TestMethod] public void gfibaParsingTest() => Test1("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=3463&siteId=gfiba");
         [TestMethod] public void apslParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=4167&siteId=logistics");
@@ -92,9 +100,9 @@ namespace alarmbot.Test
 
         [TestMethod] public void artsportsParsingTest() => Test1("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=7797&siteId=artsports");
 
-        [TestMethod] public void mechParsingTest() => Test3("https://mech.inha.ac.kr/board_notice/list.aspx");
+        [TestMethod] public void mechParsingTest() => Test6("https://mech.inha.ac.kr/mech/1134/subview.do");
         [TestMethod] public void aerospaceParsingTest() => Test1("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=7043&siteId=aerospace");
-        [TestMethod] public void naoeParsingTest() => Test1("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=1477&siteId=naoe");
+        [TestMethod] public void naoeParsingTest() => Test6("https://naoe.inha.ac.kr/naoe/1431/subview.do");
         [TestMethod] public void ieParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=1089&siteId=ie");
         [TestMethod] public void chemengParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=5950&siteId=chemeng");
         [TestMethod] public void bioParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=2185&siteId=bio");
@@ -106,7 +114,7 @@ namespace alarmbot.Test
         [TestMethod] public void archParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=6357&siteId=arch");
         [TestMethod] public void eneresParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=4991&siteId=eneres");
         [TestMethod] public void eeParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=1125&siteId=einha");
-        [TestMethod] public void cseParsingTest() => Test1("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=6594&siteId=cse");
+        [TestMethod] public void cseParsingTest() => Test6("https://cse.inha.ac.kr/cse/888/subview.do");
         [TestMethod] public void electricalParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=1009&siteId=electrical");
         [TestMethod] public void iceParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=6712&siteId=ice");
         

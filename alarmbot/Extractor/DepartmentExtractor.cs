@@ -146,5 +146,28 @@ namespace alarmbot.Extractor
             }
             return result;
         }
+
+        public static List<DepartmentDBModel> ExtractStyle6(string html, string department)
+        {
+            var result = new List<DepartmentDBModel>();
+            var root_node = html.ToHtmlNode();
+            for (int i = 1; ; i++)
+            {
+                var node = root_node.SelectSingleNode($"/html[1]/body[1]/div[5]/div[1]/div[2]/div[2]/article[1]/div[1]/div[2]/form[2]/table[1]/tbody[1]/tr[{7 + i * 1}]");
+                if (node == null) break;
+                var pattern = new DepartmentDBModel();
+                pattern.Number = node.SelectSingleNode("./td[1]").InnerText.Trim();
+                if (pattern.Number == "" || !int.TryParse(pattern.Number, out _))
+                    continue;
+                pattern.Title = HttpUtility.HtmlDecode(node.SelectSingleNode("./td[2]/a[1]/strong[1]").InnerText).Trim();
+                pattern.Link = $"https://{department}.inha.ac.kr/" + HttpUtility.HtmlDecode(node.SelectSingleNode("./td[2]/a[1]").GetAttributeValue("href", "").Trim());
+                pattern.Author = node.SelectSingleNode("./td[3]").InnerText.Trim();
+                pattern.DateTime = node.SelectSingleNode("./td[4]").InnerText.Trim();
+                pattern.Views = node.SelectSingleNode("./td[6]").InnerText.Trim();
+                pattern.Department = department;
+                result.Add(pattern);
+            }
+            return result;
+        }
     }
 }
