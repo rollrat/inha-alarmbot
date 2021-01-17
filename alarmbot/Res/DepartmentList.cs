@@ -38,7 +38,7 @@ namespace alarmbot.Res
                 ("econ", "s2", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=275&siteId=tecon", "사회과학대학", new[] { "경제학과", "경제" }),
                 ("publicad", "s2", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=3338&siteId=publicad", "사회과학대학", new[] { "행정학과", "행정" }),
                 ("political", "s2", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=3304&siteId=political", "사회과학대학", new[] { "정치외교학과", "정외" }),
-                ("comm", "", "", "사회과학대학", new[] { "언론정보학과", "언정", "언론" }),
+                ("comm", "", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=5449&siteId=comm", "사회과학대학", new[] { "미디어커뮤니케이션", "미디어", "미커" }),
                 ("consumer", "s2", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=5177&siteId=consumer", "사회과학대학", new[] { "소비자학과", "소비", "소비자" }),
                 ("child", "s2", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=6958&siteId=child", "사회과학대학", new[] { "아동심리학과", "아동심리" }),
                 ("welfare", "s2", "https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=2081&siteId=welfare", "사회과학대학", new[] { "사회복지학과", "사회복지" }),

@@ -24,6 +24,12 @@ namespace alarmbot.Extractor
         static ExtractManager()
         {
             InhaUnivArticles = InhaUnivDB.QueryAll();
+            if (InhaUnivArticles.Count == 0)
+                InhaUnivArticles.Add(new InhaUnivDBModel {
+                    Link = "https://www.inha.ac.kr/bbs/kr/8/2222/artclView.do", 
+                    DateTime = DateTime.MinValue.ToString(),
+                    Classify = "교수"
+                });
             InhaUnivArticles.Sort((x, y) => x.DateTime.CompareTo(y.DateTime));
 
             InhaUnivArticles.ForEach(x => x.Classify.Split('/').Where(y => y.Trim() != "").ToList().ForEach(y => InhaUnivFilters.Add(y)));
