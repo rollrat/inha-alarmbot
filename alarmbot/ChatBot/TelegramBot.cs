@@ -5,8 +5,13 @@ using alarmbot.Setting;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Telegram.Bot;
+using Telegram.Bot.Exceptions;
+using Telegram.Bot.Polling;
+using Telegram.Bot.Types;
+using Telegram.Bot.Types.Enums;
 
 namespace alarmbot.ChatBot
 {
@@ -17,30 +22,51 @@ namespace alarmbot.ChatBot
         public TelegramBot()
         {
             bot = new TelegramBotClient(Settings.Instance.Model.BotSettings.TelegramBotAccessToken);
-
-            bot.OnMessage += Bot_OnMessage;
         }
 
         public override Task SendMessage(BotUserIdentifier user, string message)
         {
-            return bot.SendTextMessageAsync((user as TelegramBotIdentifier).user, message);
+            return bot.SendTextMessageAsync((user as TelegramBotIdentifier).user, message, disableWebPagePreview: true);
         }
 
         public override void Start()
         {
-            bot.StartReceiving();
-        }
+            ReceiverOptions receiverOptions = new ReceiverOptions()
+            {
+                AllowedUpdates = Array.Empty<UpdateType>() // receive all update types
+            };
 
-        private async void Bot_OnMessage(object sender, Telegram.Bot.Args.MessageEventArgs e)
-        {
-            if (e.Message == null || e.Message.Type != Telegram.Bot.Types.Enums.MessageType.Text) return;
-            await BotAPI.ProcessMessage(this, new TelegramBotIdentifier(e.Message.Chat.Id), e.Message.Text);
+            bot.StartReceiving(
+                updateHandler: handleUpdateAsync,
+                pollingErrorHandler: handlePollingErrorAsync,
+                receiverOptions: receiverOptions
+            );
         }
 
         public override Task SendMessage(UserDBModel udb, string message)
         {
             return SendMessage(new TelegramBotIdentifier(Convert.ToInt64(udb.ChatBotId)), message);
         }
+
+        async Task handleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
+        {
+            if (update.Message == null || update.Message.Type != Telegram.Bot.Types.Enums.MessageType.Text) return;
+            await BotAPI.ProcessMessage(this, new TelegramBotIdentifier(update.Message.Chat.Id), update.Message.Text);
+        }
+
+        Task handlePollingErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
+        {
+            var ErrorMessage = exception switch
+            {
+                ApiRequestException apiRequestException
+                    => $"Telegram API Error:\n[{apiRequestException.ErrorCode}]\n{apiRequestException.Message}",
+                _ => exception.ToString()
+            };
+
+            Console.WriteLine(ErrorMessage);
+            return Task.CompletedTask;
+        }
+
     }
 
     public class TelegramBotIdentifier : BotUserIdentifier

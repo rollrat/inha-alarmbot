@@ -9,9 +9,9 @@ namespace alarmbot
 {
     public class Version
     {
-        public const int MajorVersion = 2020;
-        public const int MinorVersion = 06;
-        public const int BuildVersion = 01;
+        public const int MajorVersion = 2022;
+        public const int MinorVersion = 12;
+        public const int BuildVersion = 19;
 
         public const string Name = "Inha Alarm Bot";
         public static string Text { get; } = $"{MajorVersion}.{MinorVersion}.{BuildVersion}";

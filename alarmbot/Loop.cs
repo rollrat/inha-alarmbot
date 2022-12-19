@@ -73,6 +73,8 @@ namespace alarmbot
                             cc = DepartmentExtractor.ExtractStyle6(html, department.Item1);
                         else if (department.Item2 == "s7")
                             cc = DepartmentExtractor.ExtractStyle7(html, department.Item1);
+                        else
+                            continue;
 
                         // get cse latest
                         var mm = new HashSet<int>();

@@ -26,7 +26,7 @@ namespace alarmbot.Extractor
             InhaUnivArticles = InhaUnivDB.QueryAll();
             if (InhaUnivArticles.Count == 0)
                 InhaUnivArticles.Add(new InhaUnivDBModel {
-                    Link = "https://www.inha.ac.kr/bbs/kr/8/2222/artclView.do", 
+                    Link = "https://www.inha.ac.kr/bbs/kr/8/33061/artclView.do", 
                     DateTime = DateTime.MinValue.ToString(),
                     Classify = "교수"
                 });
