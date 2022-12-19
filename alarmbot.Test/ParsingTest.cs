@@ -1,5 +1,5 @@
 // This source code is a part of Inha Univ AlarmBot.
-// Copyright (C) 2020. rollrat. Licensed under the MIT Licence.
+// Copyright (C) 2020-2022. rollrat. Licensed under the MIT Licence.
 
 using alarmbot.Extractor;
 using alarmbot.Network;
@@ -69,66 +69,64 @@ namespace alarmbot.Test
             Assert.IsTrue(c1.Count > 0, $"{c1.Count}");
         }
 
-        [TestMethod] public void bizParsingTest() => Test1("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=7105&siteId=bisin");
-        [TestMethod] public void gfibaParsingTest() => Test1("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=3463&siteId=gfiba");
-        [TestMethod] public void apslParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=4167&siteId=logistics");
-        [TestMethod] public void starParsingTest() => Test1("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=673&siteId=star");
+        public void Test7(string url)
+        {
+            var html = NetTools.DownloadString(url);
+            var c1 = DepartmentExtractor.ExtractStyle7(html, "");
 
-        [TestMethod] public void koreaneduParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=6105&siteId=koreanedu");
-        [TestMethod] public void deleParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=6167&siteId=dele");
-        [TestMethod] public void socialeduParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=3697&siteId=social");
-        [TestMethod] public void educationParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=6271&siteId=education");
-        [TestMethod] public void physicaleduParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=2924&siteId=physicaledu");
-        [TestMethod] public void mathedParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=6136&siteId=mathed");
-        
-        [TestMethod] public void econParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=275&siteId=tecon");
-        [TestMethod] public void publicadParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=3338&siteId=publicad");
-        [TestMethod] public void politicalParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=3304&siteId=political");
-        [TestMethod] public void commParsingTest() => Test2("");
-        [TestMethod] public void consumerParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=5177&siteId=consumer");
-        [TestMethod] public void childParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=6958&siteId=child");
-        [TestMethod] public void welfareParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=2081&siteId=welfare");
+            Assert.IsTrue(c1.Count > 0, $"{c1.Count}");
+        }
 
-        [TestMethod] public void kroeanParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=1043&siteId=korean");
-        [TestMethod] public void historyParsingTest() => Test1("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=5314&siteId=history");
-        [TestMethod] public void philosophyParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=5070&siteId=philosophy");
-        [TestMethod] public void chineseParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=2476&siteId=china");
-        [TestMethod] public void japanParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=7858&siteId=japan");
-        [TestMethod] public void englishParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=4658&siteId=english");
-        [TestMethod] public void franceParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=3129&siteId=france");
-        [TestMethod] public void culturecmParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=4951&siteId=culturecm");
-
-        [TestMethod] public void artsportsParsingTest() => Test1("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=7797&siteId=artsports");
-
-        [TestMethod] public void mechParsingTest() => Test6("https://mech.inha.ac.kr/mech/1134/subview.do");
-        [TestMethod] public void aerospaceParsingTest() => Test1("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=7043&siteId=aerospace");
-        [TestMethod] public void naoeParsingTest() => Test6("https://naoe.inha.ac.kr/naoe/1431/subview.do");
-        [TestMethod] public void ieParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=1089&siteId=ie");
-        [TestMethod] public void chemengParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=5950&siteId=chemeng");
-        [TestMethod] public void bioParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=2185&siteId=bio");
-        [TestMethod] public void inhapolyParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=5111&siteId=inhapoly");
-        [TestMethod] public void dmseParsingTest() => Test4("http://inhasmse.cafe24.com/bbs/board.php?bo_table=notice&page=1");
-        [TestMethod] public void civilParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=5842&siteId=civil");
-        [TestMethod] public void environmentParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=1229&siteId=iuee");
-        [TestMethod] public void geoinfoParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=1517&siteId=geoinfo");
-        [TestMethod] public void archParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=6357&siteId=arch");
-        [TestMethod] public void eneresParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=4991&siteId=eneres");
-        [TestMethod] public void eeParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=1125&siteId=einha");
+        [TestMethod] public void bizParsingTest() => Test6("https://biz.inha.ac.kr/biz/4410/subview.do");
+        [TestMethod] public void gfibaParsingTest() => Test6("https://gfiba.inha.ac.kr/gfiba/4870/subview.do");
+        [TestMethod] public void apslParsingTest() => Test6("https://apsl.inha.ac.kr/logistics/4465/subview.do");
+        [TestMethod] public void starParsingTest() => Test7("https://star.inha.ac.kr/star/4282/subview.do");
+        [TestMethod] public void koreaneduParsingTest() => Test7("https://koreanedu.inha.ac.kr/koreanedu/4144/subview.do");
+        [TestMethod] public void deleParsingTest() => Test6("https://dele.inha.ac.kr/dele/4839/subview.do");
+        [TestMethod] public void socialeduParsingTest() => Test6("https://socialedu.inha.ac.kr/socialedu/4099/subview.do");
+        [TestMethod] public void educationParsingTest() => Test6("https://education.inha.ac.kr/education/4233/subview.do");
+        [TestMethod] public void physicaleduParsingTest() => Test6("https://physicaledu.inha.ac.kr/physicaledu/4653/subview.do");
+        [TestMethod] public void mathedParsingTest() => Test6("https://mathed.inha.ac.kr/mathed/4187/subview.do");
+        [TestMethod] public void econParsingTest() => Test6("https://econ.inha.ac.kr/econ/5083/subview.do");
+        [TestMethod] public void publicadParsingTest() => Test6("https://publicad.inha.ac.kr/publicad/7688/subview.do");
+        [TestMethod] public void politicalParsingTest() => Test6("https://political.inha.ac.kr/political/7753/subview.do");
+        [TestMethod] public void consumerParsingTest() => Test6("https://consumer.inha.ac.kr/consumer/7213/subview.do");
+        [TestMethod] public void childParsingTest() => Test6("https://child.inha.ac.kr/child/7488/subview.do");
+        [TestMethod] public void welfareParsingTest() => Test6("https://welfare.inha.ac.kr/welfare/7786/subview.do");
+        [TestMethod] public void koreanParsingTest() => Test6("https://korean.inha.ac.kr/korean/6786/subview.do");
+        [TestMethod] public void historyParsingTest() => Test6("https://history.inha.ac.kr/history/8215/subview.do");
+        [TestMethod] public void philosophyParsingTest() => Test6("https://philosophy.inha.ac.kr/philosophy/7853/subview.do");
+        [TestMethod] public void chineseParsingTest() => Test6("https://chinese.inha.ac.kr/chinese/6568/subview.do");
+        [TestMethod] public void japanParsingTest() => Test6("https://japan.inha.ac.kr/japan/8179/subview.do");
+        [TestMethod] public void englishParsingTest() => Test6("https://english.inha.ac.kr/english/5659/subview.do");
+        [TestMethod] public void franceParsingTest() => Test6("https://france.inha.ac.kr/france/10063/subview.do");
+        [TestMethod] public void culturecmParsingTest() => Test6("https://culturecm.inha.ac.kr/culturecm/7880/subview.do");
+        [TestMethod] public void artsportsParsingTest() => Test6("https://artsports.inha.ac.kr/artsports/9518/subview.do");
+        [TestMethod] public void mechParsingTest() => Test6("https://mech.inha.ac.kr/mech/1823/subview.do");
+        [TestMethod] public void aerospaceParsingTest() => Test6("https://aerospace.inha.ac.kr/aerospace/9846/subview.do");
+        [TestMethod] public void naoeParsingTest() => Test6("https://naoe.inha.ac.kr/naoe/1791/subview.do");
+        [TestMethod] public void ieParsingTest() => Test6("https://ie.inha.ac.kr/ie/963/subview.do");
+        [TestMethod] public void chemengParsingTest() => Test6("https://chemeng.inha.ac.kr/chemeng/2220/subview.do");
+        [TestMethod] public void bioParsingTest() => Test6("https://bio.inha.ac.kr/bio/2346/subview.do");
+        [TestMethod] public void inhapolyParsingTest() => Test6("https://inhapoly.inha.ac.kr/inhapoly/2321/subview.do");
+        [TestMethod] public void dmseParsingTest() => Test6("https://dmse.inha.ac.kr/dmse/2121/subview.do");
+        [TestMethod] public void civilParsingTest() => Test6("https://civil.inha.ac.kr/civil/2383/subview.do");
+        [TestMethod] public void environmentParsingTest() => Test6("https://environment.inha.ac.kr/environment/2541/subview.do");
+        [TestMethod] public void geoinfoParsingTest() => Test7("https://geoinfo.inha.ac.kr/geoinfo/2678/subview.do");
+        [TestMethod] public void archParsingTest() => Test6("https://arch.inha.ac.kr/arch/2161/subview.do");
+        [TestMethod] public void eneresParsingTest() => Test6("https://eneres.inha.ac.kr/eneres/3441/subview.do");
+        [TestMethod] public void eeParsingTest() => Test6("https://ee.inha.ac.kr/ee/784/subview.do");
         [TestMethod] public void cseParsingTest() => Test6("https://cse.inha.ac.kr/cse/888/subview.do");
-        [TestMethod] public void electricalParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=1009&siteId=electrical");
-        [TestMethod] public void iceParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=6712&siteId=ice");
-        
-        [TestMethod] public void mathParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=2362&siteId=math");
-        [TestMethod] public void statisticsParsingTest() => Test1("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=2410&siteId=statistics");
-        [TestMethod] public void physicsParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=3555&siteId=physics");
-        [TestMethod] public void chemistryParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=2964&siteId=chemistry");
-        [TestMethod] public void biologyParsingTest() => Test1("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=658&siteId=biology");
-        [TestMethod] public void oceanParsingTest() => Test5("http://www.wdn.co.kr/html/info02.php");
-        [TestMethod] public void foodnutriParsingTest() => Test1("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=5374&siteId=foodnutri");
-
-        [TestMethod] public void medicineParsingTest() => Test1("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=5682&siteId=medicine");
-        [TestMethod] public void nursingParsingTest() => Test1("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=3845&siteId=nursing");
-
-        [TestMethod] public void fccollegeParsingTest() => Test2("https://dept.inha.ac.kr/user/indexSub.do?codyMenuSeq=765&siteId=cfc");
+        [TestMethod] public void electricalParsingTest() => Test6("https://electrical.inha.ac.kr/electrical/2410/subview.do");
+        [TestMethod] public void iceParsingTest() => Test6("https://ice.inha.ac.kr/ice/2269/subview.do");
+        [TestMethod] public void mathParsingTest() => Test7("https://math.inha.ac.kr/math/3528/subview.do");
+        [TestMethod] public void statisticsParsingTest() => Test6("https://statistics.inha.ac.kr/statistics/3383/subview.do");
+        [TestMethod] public void physicsParsingTest() => Test6("https://physics.inha.ac.kr/physics/3908/subview.do");
+        [TestMethod] public void chemistryParsingTest() => Test6("https://chemistry.inha.ac.kr/chemistry/3298/subview.do");
+        [TestMethod] public void biologyParsingTest() => Test6("https://biology.inha.ac.kr/biology/3685/subview.do");
+        [TestMethod] public void foodnutriParsingTest() => Test6("https://foodnutri.inha.ac.kr/foodnutri/3555/subview.do");
+        [TestMethod] public void medicineParsingTest() => Test6("https://medicine.inha.ac.kr/medicine/9635/subview.do");
+        [TestMethod] public void nursingParsingTest() => Test6("https://nursing.inha.ac.kr/nursing/9272/subview.do");
+        [TestMethod] public void fccollegeParsingTest() => Test6("https://fccollege.inha.ac.kr/fccollege/8120/subview.do");
     }
 }

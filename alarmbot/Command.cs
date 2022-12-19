@@ -1,5 +1,5 @@
 ﻿// This source code is a part of Inha Univ AlarmBot.
-// Copyright (C) 2020. rollrat. Licensed under the MIT Licence.
+// Copyright (C) 2020-2022. rollrat. Licensed under the MIT Licence.
 
 using alarmbot.Setting;
 using alarmbot.Utils;
@@ -111,7 +111,7 @@ namespace alarmbot
         {
             PrintVersion();
             Console.WriteLine(Encoding.UTF8.GetString(CompressUtils.Decompress(art_console)));
-            Console.WriteLine($"Copyright (C) 2020. Inha Unit AlarmBot Project.");
+            Console.WriteLine($"Copyright (C) 2020-2022. Inha Unit AlarmBot Project.");
             Console.WriteLine($"E-Mail: rollrat.cse@gmail.com");
             Console.WriteLine($"Source-code: https://github.com/rollrat/inha-alarm");
             Console.WriteLine($"");

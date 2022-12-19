@@ -1,5 +1,5 @@
 ﻿// This source code is a part of Inha Univ AlarmBot.
-// Copyright (C) 2020. rollrat. Licensed under the MIT Licence.
+// Copyright (C) 2020-2022. rollrat. Licensed under the MIT Licence.
 
 using alarmbot.DataBase;
 using alarmbot.Res;
@@ -151,9 +151,34 @@ namespace alarmbot.Extractor
         {
             var result = new List<DepartmentDBModel>();
             var root_node = html.ToHtmlNode();
-            for (int i = 1; ; i++)
+            var nodes = root_node.SelectNodes($"/html[1]/body[1]/div[5]/div[1]/div[2]/div[2]/article[1]/div[1]/div[2]/form[2]/table[1]/tbody[1]/tr[@class!=\"headline\"]");
+            for (int i = 0; i < nodes.Count; i++)
             {
-                var node = root_node.SelectSingleNode($"/html[1]/body[1]/div[5]/div[1]/div[2]/div[2]/article[1]/div[1]/div[2]/form[2]/table[1]/tbody[1]/tr[{7 + i * 1}]");
+                var node = nodes[i];
+                if (node == null) break;
+                var pattern = new DepartmentDBModel();
+                pattern.Number = node.SelectSingleNode("./td[1]").InnerText.Trim();
+                if (pattern.Number == "" || !int.TryParse(pattern.Number, out _))
+                    continue;
+                pattern.Title = HttpUtility.HtmlDecode(node.SelectSingleNode("./td[2]/a[1]/strong[1]").InnerText).Trim();
+                pattern.Link = $"https://{department}.inha.ac.kr/" + HttpUtility.HtmlDecode(node.SelectSingleNode("./td[2]/a[1]").GetAttributeValue("href", "").Trim());
+                pattern.Author = node.SelectSingleNode("./td[3]").InnerText.Trim();
+                pattern.DateTime = node.SelectSingleNode("./td[4]").InnerText.Trim();
+                pattern.Views = node.SelectSingleNode("./td[6]").InnerText.Trim();
+                pattern.Department = department;
+                result.Add(pattern);
+            }
+            return result;
+        }
+
+        public static List<DepartmentDBModel> ExtractStyle7(string html, string department)
+        {
+            var result = new List<DepartmentDBModel>();
+            var root_node = html.ToHtmlNode();
+            var nodes = root_node.SelectNodes($"/html[1]/body[1]/div[3]/div[1]/div[2]/div[3]/div[2]/article[1]/div/div[2]/form[2]/table[1]/tbody[1]/tr[@class!=\"headline\"]");
+            for (int i = 0; i < nodes.Count; i++)
+            {
+                var node = nodes[i];
                 if (node == null) break;
                 var pattern = new DepartmentDBModel();
                 pattern.Number = node.SelectSingleNode("./td[1]").InnerText.Trim();

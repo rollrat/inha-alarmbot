@@ -1,5 +1,5 @@
 ﻿// This source code is a part of Inha Univ AlarmBot.
-// Copyright (C) 2020. rollrat. Licensed under the MIT Licence.
+// Copyright (C) 2020-2022. rollrat. Licensed under the MIT Licence.
 
 using alarmbot.ChatBot;
 using alarmbot.Extractor;
@@ -71,6 +71,8 @@ namespace alarmbot
                             cc = DepartmentExtractor.ExtractStyle5(html, department.Item1);
                         else if (department.Item2 == "s6")
                             cc = DepartmentExtractor.ExtractStyle6(html, department.Item1);
+                        else if (department.Item2 == "s7")
+                            cc = DepartmentExtractor.ExtractStyle7(html, department.Item1);
 
                         // get cse latest
                         var mm = new HashSet<int>();
