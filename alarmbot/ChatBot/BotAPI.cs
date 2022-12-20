@@ -86,6 +86,52 @@ namespace alarmbot.ChatBot
 
                             break;
 
+                        case "/my":
+
+                            {
+                                var count = 5;
+                                var cc = msg.Trim().Split(' ');
+
+                                if (cc.Length == 2)
+                                {
+                                    if (!int.TryParse(cc[1], out count))
+                                    {
+                                        await bot.SendMessage(user, "적절한 요청이 아닙니다!");
+                                        return;
+                                    }
+                                }
+
+                                var userDept = userdb.Filtering.Split(",");
+
+                                var items = new List<IDBModel>();
+
+                                if (userDept.Length > 0)
+                                {
+                                    foreach (var item in ExtractManager.DepartmentArticles)
+                                    {
+                                        if (userDept.Contains(item.Department))
+                                        {
+                                            if (item.DateTime != null)
+                                                items.Add(item);
+                                        }
+                                    }
+                                }
+
+                                items.Sort((x, y) => x.DateTime.CompareTo(y.DateTime));
+
+                                var builder = new StringBuilder();
+
+                                foreach (var item in items.TakeLast(count))
+                                {
+                                    builder.Append(item.ToString());
+                                    builder.Append("\n\n");
+                                }
+
+                                await bot.SendMessage(user, builder.ToString());
+                            }
+
+                            break;
+
                         case "/recent":
 
                             {
@@ -309,6 +355,7 @@ namespace alarmbot.ChatBot
                                 builder.Append($"인하대 알림봇 - {Version.Text}\r\n");
                                 builder.Append("\r\n");
                                 builder.Append("/start => 알림봇을 다시 설정합니다.\r\n");
+                                builder.Append("/my <개수> => 가장 최근의 학과 알림들을 지정한 개수만큼 가져옵니다. (기본값 5)\r\n");
                                 builder.Append("/recent <개수> => 가장 최근의 알림들을 지정한 개수만큼 가져옵니다. (기본값 5)\r\n");
                                 builder.Append("/today => 최근에 올라온 알림을 학과에 상관없이 모두 가져옵니다.\r\n");
                                 builder.Append("/dt <날짜> => 특정 날짜에 올라온 알림을 학과에 상관없이 모두 가져옵니다. (ex: 2022.12.20)\r\n");
