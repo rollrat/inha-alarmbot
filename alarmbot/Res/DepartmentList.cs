@@ -53,12 +53,12 @@ namespace alarmbot.Res
                 ("france", "s6", "https://france.inha.ac.kr/france/10063/subview.do", "문과대학", new[] { "프랑스언어문화학과", "프랑스"}),
                 ("culturecm", "s6", "https://culturecm.inha.ac.kr/culturecm/7880/subview.do", "문과대학", new[] { "문화콘텐츠문화경영학과", "문화콘텐츠", "문콘" }),
 
-                // 예술체육학부
-                ("artsports", "s6", "https://artsports.inha.ac.kr/artsports/9518/subview.do", "예술체육학부", new[] { "조형예술학과", "조형예술", "조형", "조예" }),
-                ("artsports", "", "", "예술체육학부", new[] { "디자인융합학과", "디자인융합", "디자인", "디융" }),
-                ("artsports", "", "", "예술체육학부", new[] { "스포츠과학과", "스포츠과학", "스포츠" }),
-                ("artsports", "", "", "예술체육학부", new[] { "연극영화학과", "연극영화", "연극", "연영" }),
-                ("artsports", "", "", "예술체육학부", new[] { "의류디자인학과", "의류디자인", "의류", "의디" }),
+                // 예술체육대학
+                ("artsports", "s6", "https://artsports.inha.ac.kr/artsports/9518/subview.do", "예술체육대학", new[] { "조형예술학과", "조형예술", "조형", "조예" }),
+                ("artsports", "", "", "예술체육대학", new[] { "디자인융합학과", "디자인융합", "디자인", "디융" }),
+                ("sport", "s6", "https://sport.inha.ac.kr/sport/9067/subview.do", "예술체육대학", new[] { "스포츠과학과", "스포츠과학", "스포츠" }),
+                ("theatrefilm", "s6", "https://theatrefilm.inha.ac.kr/theatrefilm/9566/subview.do", "예술체육대학", new[] { "연극영화학과", "연극영화", "연극", "연영" }),
+                ("fashion", "s6", "https://fashion.inha.ac.kr/fashion/4982/subview.do", "예술체육대학", new[] { "의류디자인학과", "의류디자인", "의류", "의디" }),
 
                 // 공과대학
                 ("mech", "s6", "https://mech.inha.ac.kr/mech/1823/subview.do", "공과대학", new[] { "기계공학과", "기계"}),
@@ -76,10 +76,16 @@ namespace alarmbot.Res
                 ("arch", "", "", "공과대학", new[] { "건축공학과", "건공"}),
                 ("eneres", "s6", "https://eneres.inha.ac.kr/eneres/3441/subview.do", "공과대학", new[] {"에너지자원공학과", "에너지자원", "에너지"}),
                 ("ee", "s6", "https://ee.inha.ac.kr/ee/784/subview.do", "공과대학", new[] { "전자공학과", "전자"}),
-                ("cse", "s6", "https://cse.inha.ac.kr/cse/888/subview.do", "공과대학", new[] { "컴퓨터공학과", "컴공"}),
                 ("electrical", "s6", "https://electrical.inha.ac.kr/electrical/2410/subview.do", "공과대학", new[] { "전기공학과", "전기"}),
                 ("ice", "s6", "https://ice.inha.ac.kr/ice/2269/subview.do", "공과대학", new[] { "정보통신공학과", "정보통신", "정통"}),
                 ("", "", "", "공과대학", new[] { "융합기술경영학부", "융합기술경영"}),
+
+                // 소프트웨어융합대학
+                ("cse", "s6", "https://cse.inha.ac.kr/cse/888/subview.do", "소프트웨어융합대학", new[] { "컴퓨터공학과", "컴공"}),
+                ("doai", "s6", "https://doai.inha.ac.kr/doai/3046/subview.do", "소프트웨어융합대학", new[] { "인공지능공학과", "인공지능", "인공"}),
+                ("datascience", "s6", "https://datascience.inha.ac.kr/datascience/3125/subview.do", "소프트웨어융합대학", new[] { "데이터사이언스학과", "데이터사이언스", "데이터", "데사"}),
+                ("sme", "s6", "https://sme.inha.ac.kr/sme/2867/subview.do", "소프트웨어융합대학", new[] { "스마트모빌리티공학과", "스마트모빌리티", "스모공"}),
+                ("designtech", "s6", "https://designtech.inha.ac.kr/designtech/3083/subview.do", "소프트웨어융합대학", new[] { "디자인테크놀로지학과", "디자인테크놀로지", "디자인테크", "디테크"}),
                 
                 // 자연과학대학
                 ("math", "s7", "https://math.inha.ac.kr/math/3528/subview.do", "자연과학대학", new[] { "수학과", "수학"}),
@@ -95,10 +101,10 @@ namespace alarmbot.Res
                 ("nursing", "s6", "https://nursing.inha.ac.kr/nursing/9272/subview.do", "의과대학", new[] { "간호학과", "간호" }),
 
                 // 미래융합대학
-                ("fccollege", "s6", "https://fccollege.inha.ac.kr/fccollege/8120/subview.do", "미래융합대학", new[] { "메카트로닉스학과", "메카트로닉스"}),
+                ("fccollege", "s6", "https://fccollege.inha.ac.kr/fccollege/8120/subview.do", "미래융합대학", new[] { "메카트로닉공학과", "메카트로닉"}),
                 ("fccollege", "", "", "미래융합대학", new[] { "소프트웨어융합공학과", "소프트웨어", "소공"}),
                 ("fccollege", "", "", "미래융합대학", new[] { "산업경영학과", "산업", "산경"}),
-                ("fccollege", "", "", "미래융합대학", new[] { "금융세무재테크학과", "금융"}),
+                ("fccollege", "", "", "미래융합대학", new[] { "금융투자학과", "금융"}),
             };
 
             ClassReference = new Dictionary<string, string>();
