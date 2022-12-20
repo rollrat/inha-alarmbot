@@ -11,7 +11,7 @@ using System.Web;
 
 namespace alarmbot.Extractor
 {
-    public class InhaUnivDBModel : SQLiteColumnModel
+    public class InhaUnivDBModel : SQLiteColumnModel, IDBModel
     {
         public string DateTime { get; set; }
         public string Classify { get; set; }

@@ -12,7 +12,7 @@ using System.Web;
 
 namespace alarmbot.Extractor
 {
-    public class DepartmentDBModel : SQLiteColumnModel
+    public class DepartmentDBModel : SQLiteColumnModel, IDBModel
     {
         public string Department { get; set; }
         public string Number { get; set; } // Index id

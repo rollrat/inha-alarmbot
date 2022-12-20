@@ -87,7 +87,53 @@ namespace alarmbot.ChatBot
 
                         case "/recent":
 
-                            await bot.SendMessage(user, ExtractManager.InhaUnivArticles.Last().ToString());
+                            {
+                                var count = 5;
+                                var cc = msg.Trim().Split(' ');
+
+                                if (cc.Length == 2)
+                                {
+                                    if (!int.TryParse(cc[1], out count))
+                                    {
+                                        await bot.SendMessage(user, "적절한 요청이 아닙니다!");
+                                        return;
+                                    }
+                                }
+
+                                var userDept = userdb.Filtering.Split(",");
+
+                                var items = new List<IDBModel>();
+
+                                foreach (var item in ExtractManager.InhaUnivArticles.TakeLast(count))
+                                {
+                                    if (item.DateTime != null)
+                                        items.Add(item);
+                                }
+
+                                if (userDept.Length > 0) 
+                                {
+                                    foreach (var item in ExtractManager.DepartmentArticles)
+                                    {
+                                        if (userDept.Contains(item.Department))
+                                        {
+                                            if (item.DateTime != null)
+                                                items.Add(item);
+                                        }
+                                    }
+                                }
+
+                                items.Sort((x, y) => x.DateTime.CompareTo(y.DateTime));
+
+                                var builder = new StringBuilder();
+
+                                foreach (var item in items.TakeLast(count))
+                                {
+                                    builder.Append(item.ToString());
+                                    builder.Append("\n\n");
+                                }
+
+                                await bot.SendMessage(user, builder.ToString());
+                            }
 
                             break;
 
@@ -119,7 +165,7 @@ namespace alarmbot.ChatBot
                                 builder.Append($"인하대 알림봇 - {Version.Text}\r\n");
                                 builder.Append("\r\n");
                                 builder.Append("/start => 알림봇을 다시 설정합니다.\r\n");
-                                builder.Append("/recent => 가장 최근의 알림을 가져옵니다.\r\n");
+                                builder.Append("/recent <개수> => 가장 최근의 알림들을 지정한 개수만큼 가져옵니다. (기본값 5)\r\n");
                                 builder.Append("/filterlist => 필터링 가능한 모든 목록을 가져옵니다.\r\n");
                                 builder.Append("/myfilter => 내 필터링 정보를 가져옵니다.\r\n");
                                 builder.Append("/rap => 관리자 권한을 요청합니다.\r\n");
