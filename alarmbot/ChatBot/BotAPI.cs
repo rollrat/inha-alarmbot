@@ -9,6 +9,7 @@ using alarmbot.Utils;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -137,6 +138,149 @@ namespace alarmbot.ChatBot
 
                             break;
 
+                        case "/today":
+
+                            {
+                                var items = new List<IDBModel>();
+
+                                var today = DateTime.Now;
+                                var provider = CultureInfo.InvariantCulture;
+
+                                foreach (var item in ExtractManager.InhaUnivArticles)
+                                {
+                                    if (item.DateTime != "" && 
+                                        Math.Abs(DateTime.ParseExact(item.DateTime.TrimEnd('.'), "yyyy.MM.dd", provider).Subtract(today).Days) <= 2)
+                                    {
+                                        items.Add(item);
+                                    }
+                                }
+
+                                foreach (var item in ExtractManager.DepartmentArticles)
+                                {
+                                    if (item.DateTime != "" &&
+                                        Math.Abs(DateTime.ParseExact(item.DateTime.TrimEnd('.'), "yyyy.MM.dd", provider).Subtract(today).Days) <= 2)
+                                    {
+                                        items.Add(item);
+                                    }
+                                }
+
+                                items.Sort((x, y) => x.DateTime.CompareTo(y.DateTime));
+
+                                var builder = new StringBuilder();
+
+                                foreach (var item in items)
+                                {
+                                    builder.Append(item.ToString());
+                                    builder.Append("\n\n");
+                                }
+
+                                await bot.SendMessage(user, builder.ToString());
+                            }
+
+                            break;
+
+                        case "/dt":
+
+                            {
+                                var cc = msg.Trim().Split(' ');
+
+                                if (cc.Length == 1)
+                                {
+                                    await bot.SendMessage(user, "적절한 요청이 아닙니다!");
+                                    return;
+                                }
+
+                                var items = new List<IDBModel>();
+
+                                var today = DateTime.Now;
+                                var provider = CultureInfo.InvariantCulture;
+
+                                foreach (var item in ExtractManager.InhaUnivArticles)
+                                {
+                                    if (item.DateTime != "" && item.DateTime.TrimEnd('.') == cc[1])
+                                    {
+                                        items.Add(item);
+                                    }
+                                }
+
+                                foreach (var item in ExtractManager.DepartmentArticles)
+                                {
+                                    if (item.DateTime != "" && item.DateTime.TrimEnd('.') == cc[1])
+                                    {
+                                        items.Add(item);
+                                    }
+                                }
+
+                                items.Sort((x, y) => x.DateTime.CompareTo(y.DateTime));
+
+                                var builder = new StringBuilder();
+
+                                foreach (var item in items)
+                                {
+                                    builder.Append(item.ToString());
+                                    builder.Append("\n\n");
+                                }
+
+                                await bot.SendMessage(user, builder.ToString());
+                            }
+
+                            break;
+
+                        case "/search":
+
+                            {
+                                var cc = msg.Trim().Split(' ');
+
+                                if (cc.Length == 1)
+                                {
+                                    await bot.SendMessage(user, "적절한 요청이 아닙니다!");
+                                    return;
+                                }
+
+                                var search = string.Join(' ', cc.Skip(1));
+
+                                if (search.Length < 2)
+                                {
+                                    await bot.SendMessage(user, "최소 두 글자의 검색어를 입력해주세요!");
+                                    return;
+                                }
+
+                                var items = new List<IDBModel>();
+
+                                var today = DateTime.Now;
+                                var provider = CultureInfo.InvariantCulture;
+
+                                foreach (var item in ExtractManager.InhaUnivArticles)
+                                {
+                                    if (item.DateTime != "" && item.Title.Contains(search))
+                                    {
+                                        items.Add(item);
+                                    }
+                                }
+
+                                foreach (var item in ExtractManager.DepartmentArticles)
+                                {
+                                    if (item.DateTime != "" && item.Title.Contains(search))
+                                    {
+                                        items.Add(item);
+                                    }
+                                }
+
+                                items.Sort((x, y) => x.DateTime.CompareTo(y.DateTime));
+
+                                var builder = new StringBuilder();
+
+                                foreach (var item in items)
+                                {
+                                    builder.Append(item.ToString());
+                                    builder.Append("\n\n");
+                                }
+
+                                await bot.SendMessage(user, builder.ToString());
+                            }
+
+                            break;
+
                         case "/filterlist":
 
                             {
@@ -166,6 +310,9 @@ namespace alarmbot.ChatBot
                                 builder.Append("\r\n");
                                 builder.Append("/start => 알림봇을 다시 설정합니다.\r\n");
                                 builder.Append("/recent <개수> => 가장 최근의 알림들을 지정한 개수만큼 가져옵니다. (기본값 5)\r\n");
+                                builder.Append("/today => 최근에 올라온 알림을 학과에 상관없이 모두 가져옵니다.\r\n");
+                                builder.Append("/dt <날짜> => 특정 날짜에 올라온 알림을 학과에 상관없이 모두 가져옵니다. (ex: 2022.12.20)\r\n");
+                                builder.Append("/search <검색어> => 특정 검색어가 들어간 알림들을 모두 찾습니다.\r\n");
                                 builder.Append("/filterlist => 필터링 가능한 모든 목록을 가져옵니다.\r\n");
                                 builder.Append("/myfilter => 내 필터링 정보를 가져옵니다.\r\n");
                                 builder.Append("/rap => 관리자 권한을 요청합니다.\r\n");
@@ -274,8 +421,8 @@ namespace alarmbot.ChatBot
                                 //builder.Append($"채널관리자: rollrat.cse@gmail.com\r\n");
                                 builder.Append($"소드코드: https://github.com/rollrat/inha-alarmbot\r\n");
                                 builder.Append("\r\n");
-                                builder.Append("디스코드 알림봇: http://inhaalarmbot.kro.kr\r\n");
-                                builder.Append("텔레그램 알림봇: https://t.me/inhanoticebot\r\n");
+                                //builder.Append("디스코드 알림봇: http://inhaalarmbot.kro.kr\r\n");
+                                builder.Append("텔레그램 알림봇: https://t.me/inhaalarmbot\r\n");
                                 await bot.SendMessage(user, builder.ToString());
                             }
 
