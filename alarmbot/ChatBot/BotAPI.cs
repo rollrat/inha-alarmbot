@@ -269,7 +269,7 @@ namespace alarmbot.ChatBot
                 }
             }
 
-            await bot.SendMessage(user, idbModelToString(items, items.Count).ToString());
+            await bot.SendMessage(user, idbModelToString(items, 20).ToString());
         }
 
         static async Task commandInternalDt<T>(T bot, string msg, BotUserIdentifier user, UserDBModel userdb) where T : BotModel
