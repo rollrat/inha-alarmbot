@@ -7,7 +7,7 @@
 
 디스코드 알림봇: http://inhaalarmbot.kro.kr
 
-텔레그램 알림봇: https://t.me/inhanoticebot
+텔레그램 알림봇: https://t.me/inhaalarmbot
 
 ## 구현 현황
 
