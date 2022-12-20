@@ -2,6 +2,7 @@
 // Copyright (C) 2020-2022. rollrat. Licensed under the MIT Licence.
 
 using alarmbot.Setting;
+using Swan.Logging;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -24,9 +25,16 @@ namespace alarmbot.ChatBot
             bot = new TelegramBotClient(Settings.Instance.Model.BotSettings.TelegramBotAccessToken);
         }
 
-        public override Task SendMessage(BotUserIdentifier user, string message)
+        public override async Task SendMessage(BotUserIdentifier user, string message)
         {
-            return bot.SendTextMessageAsync((user as TelegramBotIdentifier).user, message, disableWebPagePreview: true);
+            try
+            {
+                await bot.SendTextMessageAsync((user as TelegramBotIdentifier).user, message, disableWebPagePreview: true);
+            }
+            catch (Exception e)
+            {
+                Log.Logs.Instance.PushError($"[Telegram Send Error] user: ${user}, msg: ${message}\n" + e.Message + "\r\n" + e.StackTrace);
+            }
         }
 
         public override void Start()
