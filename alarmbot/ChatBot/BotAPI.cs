@@ -133,9 +133,12 @@ namespace alarmbot.ChatBot
 
         static async Task commandInternalStart<T>(T bot, BotUserIdentifier user, UserDBModel userdb) where T : BotModel
         {
-            userdb = new UserDBModel { ChatBotId = user.ToString(), ChatBotName = typeof(T).Name, Filtering = "" };
-            BotManager.Instance.UserDB.Add(userdb);
-            BotManager.Instance.Users.Add(userdb);
+            if (userdb == null)
+            {
+                userdb = new UserDBModel { ChatBotId = user.ToString(), ChatBotName = typeof(T).Name, Filtering = "" };
+                BotManager.Instance.UserDB.Add(userdb);
+                BotManager.Instance.Users.Add(userdb);
+            }
 
             Dictionary<string, string> option;
             var builder = new StringBuilder();
