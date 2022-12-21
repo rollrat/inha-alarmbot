@@ -146,8 +146,9 @@ namespace alarmbot.ChatBot
             builder.Append("\r\n");
             builder.Append("1. 인하대 공식 공지사항만 받겠습니다.\r\n");
             builder.Append("2. 학과 공지사항도 같이 받겠습니다.\r\n");
+            builder.Append("3. 학과 공지사항만 받겠습니다.\r\n");
             builder.Append("\r\n");
-            builder.Append("'1' 또는 '2' 숫자만 입력해주세요.\r\n");
+            builder.Append("'1', '2' 또는 '3' 숫자만 입력해주세요.\r\n");
             option = new Dictionary<string, string>
                 {
                     { "IsSenario", "1" },
@@ -478,12 +479,14 @@ namespace alarmbot.ChatBot
                         BotManager.Instance.UserDB.Update(userdb);
                         await bot.SendMessage(user, builder.ToString());
                     }
-                    else if (msg == "2")
+                    else if (msg == "2" || msg == "3")
                     {
                         var builder = new StringBuilder();
                         builder.Append("알림을 받고자하는 모든 학과를 쉼표로 구분하여 입력해주세요!\r\n");
                         builder.Append("(ex: 컴공,의디,경제학과)\r\n");
                         option["Senario"] = "start02";
+                        if (msg == "3")
+                            option["NoNotice"] = "true";
                         userdb.Option = JsonConvert.SerializeObject(option);
                         BotManager.Instance.UserDB.Update(userdb);
                         await bot.SendMessage(user, builder.ToString());

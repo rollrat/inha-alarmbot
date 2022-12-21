@@ -57,7 +57,7 @@ namespace alarmbot.ChatBot
             if (type.StartsWith("MSG-"))
             {
                 if (token[1] == "MAIN" || token[1] == "NOTICE")
-                    await Task.WhenAll(Users.Select(user => bots[user.ChatBotName].SendMessage(user, contents)));
+                    await Task.WhenAll(Users.Where(user => !user.Option.Contains("NoNotice")).Select(user => bots[user.ChatBotName].SendMessage(user, contents)));
                 else
                     await Task.WhenAll(Users.Where(x => x.Filtering != null && x.Filtering.Split(',').Contains(token[1])).Select(user => bots[user.ChatBotName].SendMessage(user, contents)));
                 
