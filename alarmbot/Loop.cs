@@ -77,15 +77,15 @@ namespace alarmbot
                             continue;
 
                         // get cse latest
-                        var mm = new HashSet<int>();
-                        ExtractManager.DepartmentArticles.Where(x => x.Department == department.Item1).ToList().ForEach(x => mm.Add(Convert.ToInt32(x.Number)));
+                        var mm = new HashSet<string>();
+                        ExtractManager.DepartmentArticles.Where(x => x.Department == department.Item1).ToList().ForEach(x => mm.Add(x.Link));
 
                         cc.Sort((x, y) => x.Number.CompareTo(y.Number));
 
                         int starts = 0;
                         for (starts = cc.Count - 1; starts >= 0; starts--)
                         {
-                            if (mm.Contains(Convert.ToInt32(cc[starts].Number)))
+                            if (mm.Contains(cc[starts].Link))
                                 break;
                         }
 
