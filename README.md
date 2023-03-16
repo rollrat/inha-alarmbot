@@ -3,6 +3,13 @@
 인하대 알림봇은 인하대 공식 홈페이지 및 학과 홈페이지의 공지사항을 일정 시간마다
 크롤링하여 구독자에게 알림을 보내주는 서비스입니다.
 
+## 실행
+
+```sh
+wget http://security.ubuntu.com/ubuntu/pool/main/o/openssl1.0/libssl1.0.0_1.0.2n-1ubuntu5_amd64.deb
+sudo dpkg -i libssl1.0.0_1.0.2n-1ubuntu5_amd64.deb
+```
+
 ## 운영
 
 디스코드 알림봇: http://inhaalarmbot.kro.kr
