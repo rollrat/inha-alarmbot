@@ -8,6 +8,9 @@
 ```sh
 wget http://security.ubuntu.com/ubuntu/pool/main/o/openssl1.0/libssl1.0.0_1.0.2n-1ubuntu5_amd64.deb
 sudo dpkg -i libssl1.0.0_1.0.2n-1ubuntu5_amd64.deb
+
+# https://stackoverflow.com/questions/72001969/ubuntu-22-04-jetbrains-rider-cannot-run-integration-tests
+sudo sed -i 's/openssl_conf = openssl_init/#openssl_conf = openssl_init/g' /etc/ssl/openssl.cnf 
 ```
 
 ## 운영
